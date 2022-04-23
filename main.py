@@ -1,16 +1,29 @@
-# This is a sample Python script.
+import time
+from os import mkdir
+from os import path
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+from src.backend import file_manager as flmg
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+def foldersetup():
+    with open('./init.txt','r') as f:
+        setup = f.read()
+    dir_list=setup.split(',')
+    if not path.exists(f'./{dir_list[0]}'):
+        mkdir(f'./{dir_list[0]}')
+        d_link = {'save':dir_list[0]}
+        l_link = ['image','ref','S_df']
+        for i in range(len(dir_list)-1):
+            mkdir(path.join(f'./{dir_list[0]}',dir_list[i+1]))
+            d_link[l_link[i]] = dir_list[i+1]
+
+        flmg.save_to_json('./src/conf/linker.json',d_link)
 
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
+    data_dir = foldersetup()
+
+
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
