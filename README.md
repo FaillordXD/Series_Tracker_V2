@@ -1,4 +1,4 @@
-#SERIES TRACKER
+# SERIES TRACKER
 This is a Tracker for watching Series online. Programming is a hobby, 
 so the code won't be efficient and at times might be hard to read. 
 I try my best to keep it clean. Feedback on improvements is always welcome.

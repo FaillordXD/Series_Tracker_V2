@@ -1,8 +1,11 @@
 import time
 from os import mkdir
 from os import path
+import logging
+logging.basicConfig(filename="save/ref/logging.log" ,level=logging.DEBUG)
 
 from src.backend import file_manager as flmg
+import src.view.GUI as g
 
 
 def foldersetup():
@@ -22,8 +25,9 @@ def foldersetup():
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    data_dir = foldersetup()
-
+    foldersetup()
+    app = g.GUI()
+    app.run()
 
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
