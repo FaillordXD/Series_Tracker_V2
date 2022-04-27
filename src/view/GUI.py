@@ -29,13 +29,14 @@ BUTTON_SELECTED=('#000000','#FF6F00')
 BUTTON_DESELECTED=('#FF6F00', '#000000')
 BUTTON_DELETE = ('#FFFFFF','#FF0000')
 
-max_seasons = 60
-el_per_row = 20
 
-class GUI():
+class GUI:
 
     def __init__(self):
-        layout = lg.generate_layout(max_seasons=max_seasons,el_per_row=el_per_row)
+        FontSize = sg.user_settings_get_entry('fontsize')
+        max_seasons = sg.user_settings_get_entry('SeasonTotal')
+        el_per_row = sg.user_settings_get_entry('SeasonPerRow')
+        layout = lg.generate_layout(max_seasons=max_seasons,el_per_row=el_per_row,fontsize=FontSize)
         self.mainWindow = sg.Window('Test', layout, element_padding=(0, 0), finalize=True)
         for i in range(max_seasons + 1):
             self.mainWindow[f'-SEASON-%{i}'].update(visible=False)

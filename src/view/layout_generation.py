@@ -83,9 +83,7 @@ def g_season_layout(max_cnt,entry_cnt,fontsize=12):
     if max_cnt % entry_cnt > 0:
         season_cnt.append([b + max_cnt - max_cnt % entry_cnt + 1 for b in range(max_cnt % entry_cnt)])
     #request_data('thumbnail', specific='https://bs.to/public/images/default-cover.jpg')  # TODO: implement search
-    with open(join('.',join('src',join('conf','linker.json'))),'r') as f:
-        d_folder = json.load(f)
-    img_p = d_folder['thumbnail']
+    img_p= join(join(sg.user_settings_get_entry('save'),sg.user_settings_get_entry('image')),'Thumbnail.png')
     I_thumbnail = sg.Image(data=convert_to_bytes(img_p, (100, 150)), key='-THUMBNAIL-')
     T_descriptiontext = sg.Text('', key='-DESCRIPTION-', expand_x=True)
     C_image = sg.Column([[I_thumbnail]], justification='t', pad=(0, (0, 15)),expand_x=True)
@@ -122,24 +120,26 @@ def g_watch_layout(fontsize=12):
     #hosts = request_data('hosts')
     #A_languages = [generate_Button(lang_k, lang_v, size=(15, 1)) for lang_k, lang_v in language.items()]
     #A_Hosts = [generate_Button('', host_k, image=host_v) for host_k, host_v in hosts.items()]
-    B_languages = [sg.Button('lang',key = 'de')] # text from dict
-    B_host = [sg.Button('host',key = 'host')] # image
+    font = ('Arial', fontsize)
+    B_languages = [sg.Button('lang',key = 'de', font=font)] # text from dict
+    B_host = [sg.Button('host',key = 'host', font=font)] # image
     F_languages = sg.Frame('Languages', [B_languages])
     F_Hosts = sg.Frame('Host', [B_host])
     C_watch = sg.Column([[F_languages], [sg.Text('')], [F_Hosts]], justification='left')
     return [[C_watch]]
 
 
-def g_function_layout():
-    B_next = sg.Button('Continue', key='-GO-')
-    B_new = sg.Button('New', key='-ADD-', pad=((0, 25), 0))
-    B_refresh = sg.Button('Refresh', key='-REFRESH-', pad=((0, 85), 0))
-    B_end = sg.Button('End', key='Exit')
+def g_function_layout(fontsize=12):
+    font = ('Arial', fontsize)
+    B_next = sg.Button('Continue', key='-GO-', font=font)
+    B_new = sg.Button('New', key='-ADD-', pad=((0, 25), 0), font=font)
+    B_refresh = sg.Button('Refresh', key='-REFRESH-', pad=((0, 85), 0), font=font)
+    B_end = sg.Button('End', key='Exit', font=font)
     C_Functions = sg.Column([[sg.Push(), B_next, B_new, B_refresh, sg.Push(), B_end]])
     return [[C_Functions]]
 
 
-def generate_layout(max_seasons=None,el_per_row=None):
+def generate_layout(max_seasons=None,el_per_row=None, fontsize=12):
     '''
     Function to generate the layout of the GUI
     :return: Layout for GUI
@@ -148,10 +148,10 @@ def generate_layout(max_seasons=None,el_per_row=None):
         max_seasons = 20
     if el_per_row == None:
         el_per_row = 20
-    C_series_selection = sg.Column(g_series_layout(),element_justification='l',expand_y=True)
-    C_episode_selection = sg.Column(g_season_layout(max_seasons,el_per_row),element_justification='c')
-    C_watch_selection = sg.Column(g_watch_layout(),expand_x=True)
-    C_function_selection = sg.Column(g_function_layout(),expand_x=True)
+    C_series_selection = sg.Column(g_series_layout(fontsize=fontsize),element_justification='l',expand_y=True)
+    C_episode_selection = sg.Column(g_season_layout(max_seasons,el_per_row,fontsize=fontsize),element_justification='c')
+    C_watch_selection = sg.Column(g_watch_layout(fontsize=fontsize),expand_x=True)
+    C_function_selection = sg.Column(g_function_layout(fontsize=fontsize),expand_x=True)
     layout = [[C_series_selection,sg.VerticalSeparator(pad=(20,None)), C_episode_selection],
               [sg.HSeparator(pad= (None, 10))],
               [C_watch_selection, sg.vbottom(C_function_selection)]]

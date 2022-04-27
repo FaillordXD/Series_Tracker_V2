@@ -7,7 +7,7 @@ SETTINGS_PATH = '.'
 def set_save():
     layout = [[sg.Text('Enter a save location:')],
               [sg.Input(sg.user_settings_get_entry('save', ''), key='-IN-SAVE-'), sg.FolderBrowse()],
-              [sg.B('Save')]]
+              [sg.B('Save', bind_return_key=True)]]
 
     window = sg.Window('Filename Example', layout)
 
@@ -33,7 +33,7 @@ def set_sub():
                sg.Input(sg.user_settings_get_entry('ref', ''), key='-IN-REF-'), sg.FolderBrowse()],
               [sg.Text('Enter a data location:'),
                sg.Input(sg.user_settings_get_entry('SDF', ''), key='-IN-SDF-'), sg.FolderBrowse()],
-              [sg.B('Save')]]
+              [sg.B('Save', bind_return_key=True)]]
 
     window = sg.Window('Filename Example', layout)
 
