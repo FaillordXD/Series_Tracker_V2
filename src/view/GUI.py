@@ -40,7 +40,11 @@ class GUI():
         for i in range(max_seasons + 1):
             self.mainWindow[f'-SEASON-%{i}'].update(visible=False)
         self.focus = None
+        location = self.mainWindow.current_location()
+        location = location[0] - 200, location[1] + 200
 
+    def update_elements(self):
+        pass
 
     def run(self):
         while True:

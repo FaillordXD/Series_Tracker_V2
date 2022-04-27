@@ -4,10 +4,14 @@ import PySimpleGUI as sg
 import PIL
 import io
 import base64
+from os.path import join
+import json
 
 BUTTON_SELECTED=('#000000','#FF6F00')
 BUTTON_DESELECTED=('#FF6F00', '#000000')
 BUTTON_DELETE = ('#FFFFFF','#FF0000')
+
+
 
 def convert_to_bytes(file_or_bytes, resize=None):
     '''
@@ -79,8 +83,10 @@ def g_season_layout(max_cnt,entry_cnt,fontsize=12):
     if max_cnt % entry_cnt > 0:
         season_cnt.append([b + max_cnt - max_cnt % entry_cnt + 1 for b in range(max_cnt % entry_cnt)])
     #request_data('thumbnail', specific='https://bs.to/public/images/default-cover.jpg')  # TODO: implement search
-    I_thumbnail = sg.Image(data=convert_to_bytes('./save/img/bs_tmp.png', (100, 150)), key='-THUMBNAIL-',
-                       enable_events=True)
+    with open(join('.',join('src',join('conf','linker.json'))),'r') as f:
+        d_folder = json.load(f)
+    img_p = d_folder['thumbnail']
+    I_thumbnail = sg.Image(data=convert_to_bytes(img_p, (100, 150)), key='-THUMBNAIL-')
     T_descriptiontext = sg.Text('', key='-DESCRIPTION-', expand_x=True)
     C_image = sg.Column([[I_thumbnail]], justification='t', pad=(0, (0, 15)),expand_x=True)
     C_descriptiontext = sg.Column([[T_descriptiontext]], justification='top')
@@ -106,7 +112,7 @@ def g_watch_layout(fontsize=12):
     """
     generates layout for lower left column. contains languages and hosts
 
-    key:
+    key: 
 
     :param fontsize: size of the font
     :type fontsize: int
