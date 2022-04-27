@@ -96,8 +96,8 @@ def g_season_layout(max_cnt,entry_cnt,fontsize=12):
                            enable_events=True) for c in y]  for y in season_cnt]
     F_seasonselection = sg.Frame('', B_season)
     L_episodes = sg.Listbox(episodes, key='-EPISODE-', enable_events=True, font=font,expand_x=True,size=(None,15))
-    B_refresh = sg.Button('Refresh', key='-REFRESH-THIS-', enable_events=True, font=font,  visible=True)
-    B_favorite = sg.Button('Set Favorite', key='-SET-FAVORITE-', font=font, enable_events=True,
+    B_refresh = sg.Button('Refresh', key='-REFRESH-%THIS', enable_events=True, font=font,  visible=True)
+    B_favorite = sg.Button('Set Favorite', key='-FAVORITE-%SET', font=font, enable_events=True,
                            visible=True)
     B_delete = sg.Button('Delete', key='-DEL-', font=font, enable_events=True, button_color=BUTTON_DELETE,
                          visible=True)
@@ -130,10 +130,17 @@ def g_watch_layout(fontsize=12):
 
 
 def g_function_layout(fontsize=12):
+    """
+    General layout out of the four columns.
+
+    :key '-GO-', '-ADD-', '-DEL-'
+    :param fontsize:
+    :return:
+    """
     font = ('Arial', fontsize)
-    B_next = sg.Button('Continue', key='-GO-', font=font)
+    B_next = sg.Button('Continue', key='-GO-%', font=font)
     B_new = sg.Button('New', key='-ADD-', pad=((0, 25), 0), font=font)
-    B_refresh = sg.Button('Refresh', key='-REFRESH-', pad=((0, 85), 0), font=font)
+    B_refresh = sg.Button('Refresh', key='-REFRESH-%ALL', pad=((0, 85), 0), font=font)
     B_end = sg.Button('End', key='Exit', font=font)
     C_Functions = sg.Column([[sg.Push(), B_next, B_new, B_refresh, sg.Push(), B_end]])
     return [[C_Functions]]

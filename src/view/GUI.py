@@ -33,12 +33,12 @@ BUTTON_DELETE = ('#FFFFFF','#FF0000')
 class GUI:
 
     def __init__(self):
-        FontSize = sg.user_settings_get_entry('fontsize')
-        max_seasons = sg.user_settings_get_entry('SeasonTotal')
-        el_per_row = sg.user_settings_get_entry('SeasonPerRow')
-        layout = lg.generate_layout(max_seasons=max_seasons,el_per_row=el_per_row,fontsize=FontSize)
+        self.FontSize = sg.user_settings_get_entry('fontsize')
+        self.max_seasons = sg.user_settings_get_entry('SeasonTotal')
+        self.el_per_row = sg.user_settings_get_entry('SeasonPerRow')
+        layout = lg.generate_layout(max_seasons=self.max_seasons,el_per_row=self.el_per_row,fontsize=self.FontSize)
         self.mainWindow = sg.Window('Test', layout, element_padding=(0, 0), finalize=True)
-        for i in range(max_seasons + 1):
+        for i in range(self.max_seasons + 1):
             self.mainWindow[f'-SEASON-%{i}'].update(visible=False)
         self.focus = None
         location = self.mainWindow.current_location()
@@ -57,9 +57,9 @@ class GUI:
             if event != "timeout":
                 logging.debug(f'event: {event}, values: {values}')
             if event == '-SEE-':
-                for i in range(max_seasons+1):
+                for i in range(self.max_seasons+1):
                     self.mainWindow[f'-SEASON-%{i}'].update(visible=True)
-            if event == 'close' or event == sg.WIN_CLOSED:
+            if event == 'Exit' or event == sg.WIN_CLOSED:
                 break
 
 
